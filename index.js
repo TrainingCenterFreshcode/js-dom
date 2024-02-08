@@ -44,3 +44,10 @@ function consoleHello() {
 }
 
 secondButton.addEventListener('mouseenter', consoleHello);
+
+
+/*
+
+При наведенні на кнопку "Ні" - потрібно її приховати (display: 'none')
+
+*/
