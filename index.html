@@ -6,36 +6,26 @@
     <title>Document</title>
   </head>
   <body>
-    <button>Click me 1</button>
-    <button class="super-btn">Click me 2</button>
-    <button id="btnbtn">Click me 3</button>
+    <h1>Конвертер валют</h1>
 
-    <article>
-      <p class="paragraph">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium
-        corporis quaerat dolorem dicta placeat voluptate adipisci facere vero
-        eius labore!
-      </p>
-      <p class="paragraph">
-        Saepe recusandae labore, officia sequi debitis vitae veritatis illum
-        deserunt sapiente quisquam doloribus error numquam nam, eos enim
-        consequatur repellendus!
-      </p>
-      <p class="paragraph">
-        Itaque, alias dolorum atque nesciunt facilis, animi placeat natus autem
-        amet error ullam dolore! Corrupti id deserunt earum odit corporis.
-      </p>
-      <p class="paragraph">
-        Nesciunt beatae commodi rerum odio! Repellendus doloribus eligendi nam
-        impedit voluptates nesciunt enim accusantium fugit eius molestias,
-        officia ipsa quis.
-      </p>
-      <p class="paragraph">
-        Eveniet aperiam minima nostrum molestias, libero explicabo tenetur non
-        ipsa, suscipit vero aliquam officiis numquam harum unde, tempore
-        obcaecati ad!
-      </p>
-    </article>
+    <form id="currency-converter-form">
+      <label>
+        Сума конвертації:
+        <input type="number" id="amount" min="1" required />
+      </label>
+
+      <label>
+        Оберіть валюту:
+        <select id="currency" required>
+          <option value="USD">USD</option>
+          <option value="EUR">EUR</option>
+        </select>
+      </label>
+
+      <button type="submit">Конвертувати</button>
+
+      <div id="result"></div>
+    </form>
 
     <script src="./index.js"></script>
   </body>
