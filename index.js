@@ -1,26 +1,27 @@
 /*
 
-+ 1. Маємо div
-+ 2. Маємо дві кнопки: на одній написано "Зробити червоним", на другій - "Зробити зеленим"
+Створити кнопку, яка буде змінювати тему сайту (HTML)
 
-+ 3. За натисненням на кнопку, фоновий колір div з п. 1 має змінитися на відповідний колір, вказаний на кнопці
+JS
+Якщо ви натискаєте на цю кнопку - на сайті вмикається темний режим
+(для тегу body встановіть 
+backgroundColor = якийсь_темний_колір;
+color: white;    
+)
+
+Якщо ви натискаєте на цю кнопку ще раз - на сайті ВИМИКАЄТЬСЯ темний режим
+
+(toggle)
+
+
 
 */
 
-const div = document.querySelector('#box');
+const themeToggleBtn = document.querySelector('#theme-toggle');
+const body = document.body;
 
-const [red, green] = document.querySelectorAll('.btn');
+themeToggleBtn.addEventListener('click', toggleTheme);
 
-red.addEventListener('click', redBtnHandler);
-
-function redBtnHandler(event) {
-    // div.style.backgroundColor = 'red';
-    div.classList.toggle('bg-color-red');
-}
-
-green.addEventListener('click', greenBtnHandler);
-
-function greenBtnHandler(event) {
-    // div.style.backgroundColor = 'green';
-    div.classList.toggle('bg-color-green');
+function toggleTheme() {
+    body.classList.toggle('dark-theme');
 }

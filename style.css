@@ -12,3 +12,8 @@
 .bg-color-green {
     background-color: green;
 }
+
+.dark-theme {
+    background-color: black;
+    color: white;
+}
