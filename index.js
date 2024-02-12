@@ -1,63 +1,22 @@
 /*
 
-Завдання: Створити конвертер валют
+Спробуйте зробити конвертер з градусів Цельсію у Фариангейти.
+Примітка. Формула для переходу від Цельсіїв у Фарингейт:
 
-Декомпозиція:
-
-+ 1. Створити HTML-сторінку з формою, яка містить два поля вводу:
-одне поле для введення суми в одній валюті
-інше поле - для вибору валюти, в яку ми будемо цю суму конвертувати
-
-+ 2. Додати в форму кнопку "Конвертувати"
-
-+ 3. Написати JS обробник події відправки форми:
-- отримати значення введеної суми та обраної валюти
-- обчислити конвертовану суму, помноживши введену користувачем суму на курс обміну вибраної користувачем валюти
-- вивести результат конвертації на сторінку для відображення результання (innerHTML)
-
-4. Підписати форму на подію "submit", в якості лісенера використовувати функцію з п. 3
+1 Цельсій = 33.8 Фаренгейта
 
 */
 
-const CURRENCY = {
-    USD_TO_UAH: 37.65,
-    EUR_TO_UAH: 40.61
-}
-
-const converterForm = document.querySelector('#currency-converter-form');
+const converterForm = document.querySelector('#temperature-converter-form');
 
 converterForm.addEventListener('submit', convertHandler);
 
 function convertHandler(event) {
     event.preventDefault();
 
-    const amount = Number(document.querySelector('#amount').value);
-    const currency = document.querySelector('#currency').value;
-    
-    let convertedAmount;
+    const temperatureInput = Number(document.querySelector('#temperature').value);
 
-    const {USD_TO_UAH: usdCourse, EUR_TO_UAH: eurCourse} = CURRENCY;
+    const farenheit = (temperatureInput * 9 / 5) + 32;
 
-    switch (currency) {
-        case 'USD': {
-            convertedAmount = amount * usdCourse;
-            break;
-        }
-        case 'EUR': {
-            convertedAmount = amount * eurCourse;
-            break;
-        }
-        default: throw new Error('Something problem.....!');
-    }
-
-    // if(currency === 'USD') {
-    //     convertedAmount = amount * usdCourse;
-    // } else if (currency === 'EUR') {
-    //     convertedAmount = amount * eurCourse;
-    // } else {
-    //     throw new Error('Something problem.....!');
-    // }
-
-    const resultDiv = document.querySelector('#result');
-    resultDiv.innerHTML = `${amount} ${currency} = ${convertedAmount.toFixed(2)} UAH`;
+    document.querySelector('#result').innerHTML = `${temperatureInput} C = ${farenheit} F`;
 }
