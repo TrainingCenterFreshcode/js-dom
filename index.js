@@ -1,27 +1,22 @@
 /*
 
-1. Маємо div
-2. Маємо 5 кнопок, на кожній з яких написаний колір
-3. Задача: За натисненням на кнопку, фоновий колір (backgroundColor) оцього діва має змінитися на відповідний колір, вказаний на кнопці
+https://cdn.royalcanin-weshare-online.io/3CENa2QBaxEApS7Lqd5j/v6/yellow-labrador-lying-in-the-grass
+https://petslike.net/media/cache/sylius_blog_item_image/35/6c/d35c891e94aeda634264c402088f.jpeg
+
+1. В HTML маємо елемент img
+2. В HTML маємо дві кнопки
+Ці кнопки в data-атрибутах містять посилання на певну картинку (адреса картинки)
+
++ 3. Задача: За натисненням на кнопку має відобразитись в тезі img відповідна цій кнопці картинка
 
 */
 
-const buttons = document.querySelectorAll('button');
-const div = document.querySelector('#root');
+const [btn1, btn2] = document.querySelectorAll('button');
 
-console.dir(buttons);
+btn1.addEventListener('click', clickHandler);
+btn2.addEventListener('click', clickHandler);
 
-// for(let i = 0; i < buttons.length; i++) {
-//     buttons[i].addEventListener('click', clickHandler);
-// }
-
-for(let btn of buttons) {
-    btn.addEventListener('click', clickHandler);
-}
-
-function clickHandler({target: {dataset: {color}, parentNode}}) {
-    // const {dataset: {color}} = target;
-    // const {parentNode} = target;
-
-    parentNode.style.backgroundColor = color;
+function clickHandler({target}) {
+    const img = target.parentNode.children[0];
+    img.setAttribute('src', target.dataset.src);
 }
