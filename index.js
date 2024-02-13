@@ -8,18 +8,20 @@ button.addEventListener('click', btnClickHandler);
 function btnClickHandler(event) {
     console.log('hi from button click handler');
     //console.log(event.composedPath());
-    //console.log(event.target); // той, на кому спрацювала подія
+    console.log(event.target); // той, на кому спрацювала подія
     // target - елемент на якому сталася подія
     // target - елемент, доя кого буде подія занурюватись
-    //console.log(event.currentTarget); // той, кому належить eventListener
+    console.log(event.currentTarget); // той, кому належить eventListener
     // currentTarget - елемент, якому належав обробник події
 }
 
 
 document.body.addEventListener('click', bodyClickHandler);
 
-function bodyClickHandler() {
+function bodyClickHandler(event) {
     console.log('hi from body click handler');
+    console.log(event.target); // той, на кому спрацювала подія
+    console.log(event.currentTarget); // той, кому належить eventListener
 }
 
 const clickEvent = new MouseEvent('click');
