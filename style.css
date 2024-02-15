@@ -1,5 +1,14 @@
-.box {
+#game-field {
+    background-color: rgb(243, 247, 247);
+    border: 1px solid grey;
+    width: 500px;
+    height: 500px;
+}
+
+#box {
     width: 50px;
     height: 50px;
-    background-color: orange;
+    background-color: aquamarine;
+    border: 2px solid black;
+    position: absolute;
 }
