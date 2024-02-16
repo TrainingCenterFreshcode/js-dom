@@ -72,9 +72,25 @@ function createImageWrapper(user) {
     // 1. Створення заглушки
     const imgWrapper = createElement('div', {classNames: ['image-wrapper']});
     imgWrapper.setAttribute('id', `wrapper${user.id}`);
-    
-    // 2. Створення img
+
+    // 2. Визначаємо bacground-color заглушки з урахуванням імені користувача
+    imgWrapper.style.backgroundColor = stringToColour(user.name);
+
+    // 3. Створення img
     const img = createUserImage(user);
 
     return imgWrapper;
+}
+
+function stringToColour(str) {
+    let hash = 0;
+    str.split('').forEach(char => {
+      hash = char.charCodeAt(0) + ((hash << 5) - hash)
+    })
+    let colour = '#'
+    for (let i = 0; i < 3; i++) {
+      const value = (hash >> (i * 8)) & 0xff
+      colour += value.toString(16).padStart(2, '0')
+    }
+    return colour
 }
