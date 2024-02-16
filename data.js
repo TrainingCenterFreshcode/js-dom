@@ -8,7 +8,7 @@ const data = [
         id: 2,
         name: 'Josh',
         description: 'Description for Josh',
-        profilePicture: 'https://pm1.aminoapps.com/6750/dddd7fbf857879e7a4513d20a85c1c89d5d74a41v2_hq.jpg'
+        profilePicture: 'TESThttps://pm1.aminoapps.com/6750/dddd7fbf857879e7a4513d20a85c1c89d5d74a41v2_hq.jpg'
     }, {
         id: 3,
         name: 'Jane',
@@ -23,7 +23,7 @@ const data = [
         id: 5,
         name: 'Alex',
         description: 'Description for Alex',
-        profilePicture: 'https://pm1.aminoapps.com/6750/dddd7fbf857879e7a4513d20a85c1c89d5d74a41v2_hq.jpg'
+        profilePicture: 'https://www.belnovosti.by/sites/default/files/2022-10/chihuahua-gca8ce1092_1280_compressed.jpg'
     }, {
         id: 6,
         name: 'Nathan',
