@@ -1,96 +1,90 @@
 /*
 
-<article class="card-wrapper">
-        <div class="image-wrapper">
-          <img class="card-image" src="https://pm1.aminoapps.com/6750/dddd7fbf857879e7a4513d20a85c1c89d5d74a41v2_hq.jpg" alt="John avatar">
-        </div>
-        <h2 class="username">John</h2>
-        <p class="description">Description for John</p>
-</article>
+Задача: створення простенької TODO
+
++ Базовий рівень.
+
+1. Зробити інпут для вводу тексту
+2. Зробити кнопку, яка по натисненю, текст з інпута перетворює на елемент списку
+
+<form>
+    <input type="text" />
+    <button>Click to add</button>
+</form>
+
+<ul>
+    <li>Зробити щось одне</li>
+    <li>Зробити щось інше</li>
+</ul>
+
+
+Просунутий рівень.
+
+Задача: до кожного li приєднати кнопку, за допомогою якої елемент зі списку можна видалити
 
 */
 
-const root = document.querySelector('#root');
+const form = document.querySelector('#todo-form');
 
-function createUserCard(user) {
-    // 1. Створюємо обгортку для картинки
-    const imgWrapper = createImageWrapper(user);
-    
-    // 2. Створення h2
-    const h2 = createElement('h2', {classNames: ['username']}, user.name);
+// function getTaskCount() { // need review
+//     let taskCount = 0;
+//     return function() {
+//         return {
+//             increment: function () {
+//                 taskCount++;
+//             },
+//             readTaskCount: function() {
+//                 return taskCount;
+//             }
+//         } 
+//     }
+// }
 
-    // 3. Створення p
-    const p = createElement('p', {classNames: ['description']}, user.description);
+// const taskCounter = getTaskCount();
 
-    // 4. Створюємо і повертаємо article, в який вкладені створені img, h2, p
-    return createElement('article', {classNames: ['card-wrapper']}, imgWrapper, h2, p);
-}
+let taskCount = 0;
 
-const cardArray = data.map(user => createUserCard(user));
+form.addEventListener('submit', addItem);
 
-root.append(...cardArray);
+function addItem(event) {
+    event.preventDefault();
 
-/**
- * @param {String} type - тег елемента, який нам треба створити
- * @param {String[]} classNames - список класів, які треба додати до елемента
- * @param {...Node} childNodes - список дочірніх вузлів
- * @returns {HTMLElement}
- */
-function createElement(type, {classNames}, ...childNodes) {
-    const elem = document.createElement(type);
-    elem.classList.add(...classNames);
-    elem.append(...childNodes);
-
-    return elem;
-}
-
-function imageLoadHandler({target}) {
-    console.log('image successfully loaded');
-    const parentWrapper = document.querySelector(`#wrapper${target.dataset.id}`);
-    parentWrapper.append(target);
-}
-
-function imageErrorHandler({target}) {
-    target.remove();
-    console.log('image loading has error');
-}
-
-function createUserImage(user) {
-    const img = document.createElement('img');
-    img.setAttribute('src', user.profilePicture);
-    img.setAttribute('alt', user.name);
-    img.dataset.id = user.id;
-    img.classList.add('card-image');
-
-    img.addEventListener('load', imageLoadHandler);
-    img.addEventListener('error', imageErrorHandler);
-    
-    return img;
-}
-
-function createImageWrapper(user) {
-    // 1. Створення заглушки
-    const imgWrapper = createElement('div', {classNames: ['image-wrapper']});
-    imgWrapper.setAttribute('id', `wrapper${user.id}`);
-
-    // 2. Визначаємо bacground-color заглушки з урахуванням імені користувача
-    imgWrapper.style.backgroundColor = stringToColour(user.name);
-
-    // 3. Створення img
-    const img = createUserImage(user);
-
-    return imgWrapper;
-}
-
-function stringToColour(str) {
-    let hash = 0;
-    str.split('').forEach(char => {
-      hash = char.charCodeAt(0) + ((hash << 5) - hash)
-    })
-    let colour = '#'
-    for (let i = 0; i < 3; i++) {
-      const value = (hash >> (i * 8)) & 0xff
-      colour += value.toString(16).padStart(2, '0')
+    // Перевірка, чи не забагато завдань на сьогодні
+    if(taskCount === 10) {
+        alert('Ми досягли максимальної кількості завдань');
+        return;
     }
-    return colour
+    
+    const {target} = event;
+    const [todoInput] = target;
+    
+    // Валідація інпута
+    const value = todoInput.value.trim();
+    if(value === '') {
+        alert('Текст завдання не може бути порожньою стркою');
+        return;
+    }
+    // Створення елементу списку
+    const list = document.querySelector('#todo-list');
+    const li = document.createElement('li');
+    li.textContent = value;
+    list.append(li);
+
+    // Створюємо кнопку для видалення
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent = 'remove task';
+    deleteBtn.classList.add('remove-btn');
+    deleteBtn.addEventListener('click', deleteHandler);
+    li.append(deleteBtn);
+
+    // Інкрементуємо лічильник завдань
+    taskCount++;
+
+    // Чистимо форму після відправки
+    target.reset();
+}
+
+function deleteHandler({target: {parentNode}}) {
+    parentNode.remove();
+    taskCount--;
 }
