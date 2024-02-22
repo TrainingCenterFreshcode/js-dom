@@ -1,24 +1,15 @@
-// Серіалізація - процес перетворення JS об'єкта в JSON
-// Десеріалізація - процес перетворення JSON в JS об'єкт
+// fetch('./user.json')
+// .then((response) => {
+//     return response.json(); // перетворюємо нулі та одинички на JS об'єкт
+// })
+// .then((data) => {
+//     console.log(data);
+// });
 
-// Поверхнева копія об'єкту (shallow copy) - копія, де копіюються тільки посилання на елементи, а не самі значення
-
-const originalObject = {
-    users: [
-        {
-            name: 'John',
-            age: 25
-        },
-        {
-            name: 'Lucky',
-            age: 33
-        }
-    ]
-}
-
-const shallowCopy = {...originalObject};
-
-
-// Глибока копія (deep copy) - створення повноцінної копії об'єкта, де копіюються як посилання на його елементи, так і їхні значення
-
-const deepCopy = JSON.parse(JSON.stringify(originalObject));
+fetch('https://api.privatbank.ua/p24api/pubinfo?exchange&coursid=5')
+.then((response) => {
+    return response.json(); // перетворюємо нулі та одинички на JS об'єкт
+})
+.then((data) => {
+    console.log(data);
+});
