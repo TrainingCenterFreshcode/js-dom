@@ -11,15 +11,22 @@ function loadImage(src) {
 
     // 3. Промісифікація - коли ми огортаємо якийсь асинхронний код в проміс, для того забезпечити собі зручну роботу
     return new Promise((resolve, reject) => {
+        // Створюємо таймаут на 5 секунд для завантаження картинки
+        const timeoutId = setTimeout(() => {
+            reject('Image can`t be loaded');
+        }, 5000);
+        
         // Підписуємо створену картинку на подію load
         // Якщо картинка завантажиться - ми резолвимо проміс з елементом картинки
         img.addEventListener('load', () => {
+            clearTimeout(timeoutId);
             resolve(img);
         });
 
         // Підписуємо створену картинку на подію error
         // Якщо картинка не завантажиться - ми реджектимо з повідомленням про помилку
         img.addEventListener('error', () => {
+            clearTimeout(timeoutId);
             reject('Image can`t be loaded');
         });
     });
