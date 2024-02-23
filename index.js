@@ -1,46 +1,80 @@
-function loadImage(src) {
-    // 1. Створюємо саму картинку
-    const img = document.createElement('img');
-    img.setAttribute('src', src);
+/*
+https://api.openweathermap.org/data/2.5/weather?q=Dnipro&appid=f7c576ba3699bdd0b98ddcf196639992&units=metric
 
-    // 2. Створюємо елемент у верстці, який буде слугувати нам для того, що вказує, чи вантажимо ми щось чи ні
-    const h2 = document.createElement('h2');
-    h2.id = 'loading-h2';
-    h2.append('Loading image....');
-    document.body.append(h2);
 
-    // 3. Промісифікація - коли ми огортаємо якийсь асинхронний код в проміс, для того забезпечити собі зручну роботу
-    return new Promise((resolve, reject) => {
-        // Створюємо таймаут на 5 секунд для завантаження картинки
-        const timeoutId = setTimeout(() => {
-            reject('Image can`t be loaded');
-        }, 5000);
-        
-        // Підписуємо створену картинку на подію load
-        // Якщо картинка завантажиться - ми резолвимо проміс з елементом картинки
-        img.addEventListener('load', () => {
-            clearTimeout(timeoutId);
-            resolve(img);
-        });
 
-        // Підписуємо створену картинку на подію error
-        // Якщо картинка не завантажиться - ми реджектимо з повідомленням про помилку
-        img.addEventListener('error', () => {
-            clearTimeout(timeoutId);
-            reject('Image can`t be loaded');
-        });
-    });
+f7c576ba3699bdd0b98ddcf196639992
+
+
+// Задача: зробити погодний віджет
+
+Алгоритм вирішення:
++ 1. Зробити верстку елементів, які отримують від користувача дані про місто
++ 2. Отримати дані з апі і обробити їх (підготувати дані для відмалювання у верстці)
+3. Зробити картку з погодою і відобразити її
+
+*/
+
+const API_KEY = 'f7c576ba3699bdd0b98ddcf196639992';
+const API_BASE = 'https://api.openweathermap.org/data/2.5/weather';
+
+const btn = document.querySelector('.btn');
+
+btn.addEventListener('click', buttonClickHandler);
+
+function buttonClickHandler({target}) {
+    const selectValue = target.previousElementSibling.value;
+    requestAPI(selectValue);
 }
 
-loadImage('https://hips.hearstapps.com/hmg-prod/images/group-portrait-of-adorable-puppies-royalty-free-image-1687451786.jpg?crop=0.89122xw:1xh;center,top&resize=1200:*')
-.then((img) => {
-    document.body.append(img);
-}, (errorMessage) => {
-    const h2 = document.createElement('h2');
-    h2.append(errorMessage);
-    document.body.append(h2);
-})
-.finally(() => {
-    const loadingH2 = document.querySelector('#loading-h2');
-    loadingH2.remove();
-});
+function requestAPI(cityName) {
+    // 1. Готуємо URL
+    const url = `${API_BASE}?q=${cityName}&appid=${API_KEY}&units=metric`;
+    
+    // 2. Робимо запит
+    fetch(url)
+    .then((response) => {
+        return response.json();
+    })
+    .then((data) => {
+        // 3. Відмальовуємо погоду
+        displayWeather(data);
+    })
+}
+
+/*
+
+<article class="weather">
+        <p>City name: Kyiv</p>
+        <p>Temperature: 7°C</p>
+        <p>Weather description: overcast clouds</p>
+</article>
+
+*/
+
+function displayWeather(weatherObject) {
+    const { name, main: {temp}, weather: [ { description } ] } = weatherObject;
+    
+    // 1. Створюємо article
+    const article = document.createElement('article');
+    article.classList.add('weather');
+
+    // 2. Створюємо параграф з назвою міста
+    const cityName = document.createElement('p');
+    cityName.append(`City name: ${name}`);
+
+    // 3. Створюємо параграф з температурою
+    const temperature = document.createElement('p');
+    temperature.append(`Temperature: ${temp}°C`);
+
+    // 4. Створюємо параграф з описом погоди
+    const weatherDescription = document.createElement('p');
+    weatherDescription.append(`Weather description: ${description}`);
+
+    // 5. До артікла чіпляємо парграфи, створені в п. [2-4]
+    article.append(cityName, temperature, weatherDescription);
+
+    // 6. Знаходимо секцію і чіпляємо до неї артікл
+    const section = document.querySelector('.wrapper');
+    section.append(article);
+}
