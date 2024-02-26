@@ -38,43 +38,23 @@ function requestAPI(cityName) {
     })
     .then((data) => {
         // 3. Відмальовуємо погоду
+        console.log(data);
         displayWeather(data);
     })
 }
 
-/*
-
-<article class="weather">
-        <p>City name: Kyiv</p>
-        <p>Temperature: 7°C</p>
-        <p>Weather description: overcast clouds</p>
-</article>
-
-*/
-
 function displayWeather(weatherObject) {
     const { name, main: {temp}, weather: [ { description } ] } = weatherObject;
+
+    const article = document.querySelector('#weather-box');
+    article.classList.add('weather-display');
     
-    // 1. Створюємо article
-    const article = document.createElement('article');
-    article.classList.add('weather');
+    const city = document.querySelector('#city');
+    city.textContent = name;
 
-    // 2. Створюємо параграф з назвою міста
-    const cityName = document.createElement('p');
-    cityName.append(`City name: ${name}`);
+    const temperature = document.querySelector('#temp');
+    temperature.textContent = `${temp}°C`;
 
-    // 3. Створюємо параграф з температурою
-    const temperature = document.createElement('p');
-    temperature.append(`Temperature: ${temp}°C`);
-
-    // 4. Створюємо параграф з описом погоди
-    const weatherDescription = document.createElement('p');
-    weatherDescription.append(`Weather description: ${description}`);
-
-    // 5. До артікла чіпляємо парграфи, створені в п. [2-4]
-    article.append(cityName, temperature, weatherDescription);
-
-    // 6. Знаходимо секцію і чіпляємо до неї артікл
-    const section = document.querySelector('.wrapper');
-    section.append(article);
+    const desc = document.querySelector('#description');
+    desc.textContent = description;
 }
